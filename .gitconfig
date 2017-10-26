@@ -1,0 +1,18 @@
+[user]
+	email = v.belous@corp.mail.ru
+	name = Vyacheslav Belous
+[diff]
+	tool = vimdiff
+[alias]
+	d = difftool -C
+	b = branch
+	s = status
+	co = checkout
+	l = log --decorate
+[merge]
+	tool = vimdiff
+	conflictstyle = diff3
+[push]
+	default = current
+[mergetool]
+	keepBackup = false
