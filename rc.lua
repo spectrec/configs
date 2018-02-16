@@ -51,12 +51,12 @@ local layouts = {
 -- }}}
 
 -- {{{ Wallpaper
-beautiful.init("/usr/local/share/awesome/themes/zenburn/theme.lua")
-beautiful.wallpaper = '/usr/share/awesome/wallpapers/arch_linux.jpg'
-for s = 1, screen.count() do
-	gears.wallpaper.maximized(beautiful.wallpaper, nil, true)
-end
--- }}}
+beautiful.init("/usr/share/awesome/themes/zenburn/theme.lua")
+-- beautiful.wallpaper = '/usr/share/awesome/wallpapers/arch_linux.jpg'
+-- for s = 1, screen.count() do
+-- 	gears.wallpaper.maximized(beautiful.wallpaper, nil, true)
+-- end
+--}}}
 
 -- {{{ Tags
 local tags = {
@@ -129,7 +129,7 @@ do
 		end
 
 		return string.format("Bat: %s%% (%s) | ", text_color(color, value), time)
-	end, 10, "BAT0")
+	end, 10, "BAT1")
 end
 
 local volumewidget = wibox.widget.textbox()
@@ -207,16 +207,16 @@ globalkeys = awful.util.table.join(
 
 	awful.key({ modkey,			  }, "F6", toggle_screen_count),
 
-	awful.key({ modkey,			  }, "F1",
-		function () awful.util.spawn("amixer sset Master toggle") end),
 	awful.key({ modkey,			  }, "F2",
-		function () awful.util.spawn("amixer -c0 set Master 1%-") end),
+		function () awful.util.spawn("amixer sset Master toggle") end),
 	awful.key({ modkey,			  }, "F3",
+		function () awful.util.spawn("amixer -c0 set Master 1%-") end),
+	awful.key({ modkey,			  }, "F4",
 		function () awful.util.spawn("amixer -c0 set Master 1%+") end),
 
-	awful.key({ modkey,			  }, "F7",
+	awful.key({ modkey,			  }, "F5",
 		function () awful.util.spawn("xbacklight -5") end),
-	awful.key({ modkey,			  }, "F8",
+	awful.key({ modkey,			  }, "F6",
 		function () awful.util.spawn("xbacklight +5") end),
 
 	awful.key({ modkey,			  }, "Print",
@@ -267,11 +267,11 @@ globalkeys = awful.util.table.join(
 	awful.key({ modkey, "Control" }, "n", awful.client.restore),
 
 	-- Prompt
-	awful.key({ modkey            }, "r", function () mypromptbox[mouse.screen.index]:run() end),
+	awful.key({ modkey            }, "r", function () mypromptbox[mouse.screen]:run() end),
 	awful.key({ modkey }, "x",
 		function ()
 			awful.prompt.run({ prompt = "Run Lua code: " },
-			mypromptbox[mouse.screen.index].widget,
+			mypromptbox[mouse.screen].widget,
 			awful.util.eval, nil,
 			awful.util.getdir("cache") .. "/history_eval")
 		end),
@@ -308,7 +308,7 @@ for i = 1, 9 do
 		-- View tag only.
 		awful.key({ modkey }, "#" .. i + 9,
 				function ()
-						local screen = mouse.screen.index
+						local screen = mouse.screen
 						local tag = awful.tag.gettags(screen)[i]
 						if tag then
 							awful.tag.viewonly(tag)
@@ -387,4 +387,16 @@ end)
 
 client.connect_signal("focus", function(c) c.border_color = beautiful.border_focus end)
 client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
+-- }}}
+
+
+-- {{{ startup
+awful.util.spawn("/usr/bin/setxkbmap -option 'caps:ctrl_modifier'")
+awful.util.spawn('/usr/bin/setxkbmap -layout "us,ru(winkeys)" -option grp:alt_shift_toggle')
+awful.util.spawn("/usr/bin/xcape -e 'Caps_Lock=Control_L'")
+
+awful.util.spawn("/usr/bin/xscreensaver -no-splash")
+awful.util.spawn("/usr/bin/nm-applet")
+awful.util.spawn("/usr/bin/tilda")
+awful.util.spawn("/usr/bin/kbdd")
 -- }}}

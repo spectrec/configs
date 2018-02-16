@@ -18,4 +18,5 @@ xinit: .xinitrc
 	$(INSTALL) -t ~/ .xinitrc
 
 awesome: rc.lua
+	mkdir -p ~/.config/awesome/
 	$(INSTALL) -t ~/.config/awesome/ rc.lua
