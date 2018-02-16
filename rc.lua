@@ -52,10 +52,11 @@ local layouts = {
 
 -- {{{ Wallpaper
 beautiful.init("/usr/share/awesome/themes/zenburn/theme.lua")
--- beautiful.wallpaper = '/usr/share/awesome/wallpapers/arch_linux.jpg'
--- for s = 1, screen.count() do
--- 	gears.wallpaper.maximized(beautiful.wallpaper, nil, true)
--- end
+local wallpaper = '/usr/share/xfce4/backdrops/xubuntu-vivid.png'
+
+for s = 1, screen.count() do
+	gears.wallpaper.maximized(wallpaper, s, true)
+end
 --}}}
 
 -- {{{ Tags
@@ -191,9 +192,9 @@ do
 	local several_screens = screen.count() > 1
 	function toggle_screen_count()
 		if several_screens == true then
-			awful.util.spawn("xrandr --output VGA1 --off")
+			awful.util.spawn("xrandr --output VGA-1 --off")
 		else
-			awful.util.spawn("xrandr --output VGA1 --auto --above LVDS1")
+			awful.util.spawn("xrandr --output VGA-1 --auto --above LVDS-1")
 		end
 
 		several_screens = not several_screens
@@ -205,7 +206,7 @@ globalkeys = awful.util.table.join(
 	awful.key({ modkey,			  }, "Escape",
 		function () awful.util.spawn("xscreensaver-command -lock") end),
 
-	awful.key({ modkey,			  }, "F6", toggle_screen_count),
+	awful.key({ modkey,			  }, "F7", toggle_screen_count),
 
 	awful.key({ modkey,			  }, "F2",
 		function () awful.util.spawn("amixer sset Master toggle") end),
@@ -389,14 +390,26 @@ client.connect_signal("focus", function(c) c.border_color = beautiful.border_foc
 client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
 -- }}}
 
+local function run_once(command)
+	local fh = io.popen("/usr/bin/pgrep -f \"" .. command .. "\"")
+	local pid = fh:read("*n")
+	fh:close()
+
+	if pid ~= nil then
+		-- process is already running
+		return
+	end
+
+	awful.util.spawn(command)
+end
 
 -- {{{ startup
-awful.util.spawn("/usr/bin/setxkbmap -option 'caps:ctrl_modifier'")
-awful.util.spawn('/usr/bin/setxkbmap -layout "us,ru(winkeys)" -option grp:alt_shift_toggle')
-awful.util.spawn("/usr/bin/xcape -e 'Caps_Lock=Control_L'")
+run_once("/usr/bin/setxkbmap -layout 'us,ru(winkeys)' -option grp:alt_shift_toggle")
+run_once("/usr/bin/setxkbmap -option 'caps:ctrl_modifier'")
+run_once("/usr/bin/xcape -e 'Caps_Lock=Control_L'")
 
-awful.util.spawn("/usr/bin/xscreensaver -no-splash")
-awful.util.spawn("/usr/bin/nm-applet")
-awful.util.spawn("/usr/bin/tilda")
-awful.util.spawn("/usr/bin/kbdd")
+run_once("/usr/bin/xscreensaver -no-splash")
+run_once("/usr/bin/nm-applet")
+run_once("/usr/bin/tilda")
+run_once("/usr/bin/kbdd")
 -- }}}
