@@ -408,6 +408,9 @@ run_once("/usr/bin/setxkbmap -layout 'us,ru(winkeys)' -option grp:alt_shift_togg
 run_once("/usr/bin/setxkbmap -option 'caps:ctrl_modifier'")
 run_once("/usr/bin/xcape -e 'Caps_Lock=Control_L'")
 
+-- configure mouse buttons
+run_once("/usr/bin/synclient TapButton1=1 TapButton2=2 TapButton3=3")
+
 run_once("/usr/bin/xscreensaver -no-splash")
 run_once("/usr/bin/nm-applet")
 run_once("/usr/bin/tilda")
