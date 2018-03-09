@@ -1,6 +1,6 @@
 INSTALL="/usr/bin/install"
 
-install_all: vim git ssh xinit tmux awesome
+install_all: vim git ssh xinit tmux awesome redshift
 
 vim: .vimrc
 	$(INSTALL) -t ~/ .vimrc
@@ -20,3 +20,6 @@ xinit: .xinitrc
 awesome: rc.lua
 	mkdir -p ~/.config/awesome/
 	$(INSTALL) -t ~/.config/awesome/ rc.lua
+
+redshift: redshift.conf
+	$(INSTALL) -t ~/.config/ redshift.conf
