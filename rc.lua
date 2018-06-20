@@ -51,8 +51,8 @@ local layouts = {
 -- }}}
 
 -- {{{ Wallpaper
-beautiful.init("/usr/share/awesome/themes/zenburn/theme.lua")
-local wallpaper = '/usr/share/xfce4/backdrops/xubuntu-vivid.png'
+beautiful.init("/usr/local/share/awesome/themes/zenburn/theme.lua")
+local wallpaper = '/usr/share/awesome/wallpapers/arch_linux.jpg'
 
 for s = 1, screen.count() do
 	gears.wallpaper.maximized(wallpaper, s, true)
@@ -130,7 +130,7 @@ do
 		end
 
 		return string.format("Bat: %s%% (%s) | ", text_color(color, value), time)
-	end, 10, "BAT1")
+	end, 10, "BAT0")
 end
 
 local volumewidget = wibox.widget.textbox()
@@ -206,18 +206,18 @@ globalkeys = awful.util.table.join(
 	awful.key({ modkey,			  }, "Escape",
 		function () awful.util.spawn("xscreensaver-command -lock") end),
 
-	awful.key({ modkey,			  }, "F7", toggle_screen_count),
+	awful.key({ modkey,			  }, "F6", toggle_screen_count),
 
-	awful.key({ modkey,			  }, "F2",
+	awful.key({ modkey,			  }, "F1",
 		function () awful.util.spawn("amixer sset Master toggle") end),
-	awful.key({ modkey,			  }, "F3",
+	awful.key({ modkey,			  }, "F2",
 		function () awful.util.spawn("amixer -c0 set Master 1%-") end),
-	awful.key({ modkey,			  }, "F4",
+	awful.key({ modkey,			  }, "F3",
 		function () awful.util.spawn("amixer -c0 set Master 1%+") end),
 
-	awful.key({ modkey,			  }, "F5",
+	awful.key({ modkey,			  }, "F7",
 		function () awful.util.spawn("xbacklight -5") end),
-	awful.key({ modkey,			  }, "F6",
+	awful.key({ modkey,			  }, "F8",
 		function () awful.util.spawn("xbacklight +5") end),
 
 	awful.key({ modkey,			  }, "Print",
@@ -386,33 +386,10 @@ client.connect_signal("manage", function (c, startup)
 	end
 end)
 
-client.connect_signal("focus", function(c) c.border_color = beautiful.border_focus end)
-client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
--- }}}
-
-local function run_once(command)
-	local fh = io.popen("/usr/bin/pgrep -f \"" .. command .. "\"")
-	local pid = fh:read("*n")
-	fh:close()
-
-	if pid ~= nil then
-		-- process is already running
-		return
-	end
-
-	awful.util.spawn(command)
-end
-
--- {{{ startup
-run_once("/usr/bin/setxkbmap -layout 'us,ru(winkeys)' -option grp:alt_shift_toggle")
-run_once("/usr/bin/setxkbmap -option 'caps:ctrl_modifier'")
-run_once("/usr/bin/xcape -e 'Caps_Lock=Control_L'")
-
--- configure mouse buttons
-run_once("/usr/bin/synclient TapButton1=1 TapButton2=2 TapButton3=3")
-
-run_once("/usr/bin/xscreensaver -no-splash")
-run_once("/usr/bin/nm-applet")
-run_once("/usr/bin/tilda")
-run_once("/usr/bin/kbdd")
+client.connect_signal("focus", function(c)
+	c.border_color = beautiful.border_focus
+end)
+client.connect_signal("unfocus", function(c)
+	c.border_color = beautiful.border_normal
+end)
 -- }}}
