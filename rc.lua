@@ -52,8 +52,8 @@ local layouts = {
 
 -- {{{ Wallpaper
 beautiful.init("/usr/share/awesome/themes/zenburn/theme.lua")
-local wallpaper = '/usr/share/xfce4/backdrops/xubuntu-vivid.png'
 
+local wallpaper = '/usr/share/awesome/themes/zenburn/xubuntu.png'
 for s = 1, screen.count() do
 	gears.wallpaper.maximized(wallpaper, s, true)
 end
@@ -130,7 +130,7 @@ do
 		end
 
 		return string.format("Bat: %s%% (%s) | ", text_color(color, value), time)
-	end, 10, "BAT1")
+	end, 10, "BAT0")
 end
 
 local volumewidget = wibox.widget.textbox()
@@ -192,9 +192,9 @@ do
 	local several_screens = screen.count() > 1
 	function toggle_screen_count()
 		if several_screens == true then
-			awful.util.spawn("xrandr --output VGA-1 --off")
+			awful.util.spawn("xrandr --output DP-1 --off")
 		else
-			awful.util.spawn("xrandr --output VGA-1 --auto --above LVDS-1")
+			awful.util.spawn("xrandr --output DP-1 --auto --above eDP-1")
 		end
 
 		several_screens = not several_screens
@@ -206,18 +206,18 @@ globalkeys = awful.util.table.join(
 	awful.key({ modkey,			  }, "Escape",
 		function () awful.util.spawn("xscreensaver-command -lock") end),
 
-	awful.key({ modkey,			  }, "F7", toggle_screen_count),
-
-	awful.key({ modkey,			  }, "F2",
-		function () awful.util.spawn("amixer sset Master toggle") end),
-	awful.key({ modkey,			  }, "F3",
-		function () awful.util.spawn("amixer -c0 set Master 1%-") end),
-	awful.key({ modkey,			  }, "F4",
-		function () awful.util.spawn("amixer -c0 set Master 1%+") end),
+	awful.key({ modkey,			  }, "F9", toggle_screen_count),
 
 	awful.key({ modkey,			  }, "F5",
-		function () awful.util.spawn("xbacklight -5") end),
+		function () awful.util.spawn("amixer sset Master toggle") end),
 	awful.key({ modkey,			  }, "F6",
+		function () awful.util.spawn("amixer -c0 set Master 1%-") end),
+	awful.key({ modkey,			  }, "F7",
+		function () awful.util.spawn("amixer -c0 set Master 1%+") end),
+
+	awful.key({ modkey,			  }, "F3",
+		function () awful.util.spawn("xbacklight -5") end),
+	awful.key({ modkey,			  }, "F4",
 		function () awful.util.spawn("xbacklight +5") end),
 
 	awful.key({ modkey,			  }, "Print",
