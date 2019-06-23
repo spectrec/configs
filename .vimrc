@@ -2,7 +2,7 @@ set nocompatible
 
 call plug#begin('~/.vim/plugged')
 Plug 'ervandew/supertab'
-Plug 'fatih/vim-go'
+Plug 'fatih/vim-go', { 'tag': 'v1.19' }
 Plug 'Rip-Rip/clang_complete'
 call plug#end()
 
