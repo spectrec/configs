@@ -6,7 +6,6 @@ Plug 'fatih/vim-go', { 'tag': 'v1.19' }
 Plug 'Rip-Rip/clang_complete'
 call plug#end()
 
-
 set listchars=tab:>-,trail:~,extends:>,precedes:<
 set list
 
@@ -103,8 +102,7 @@ autocmd FileType *
     \   call SuperTabSetDefaultCompletionType("context")    |
     \ endif
 
-autocmd FileType go
-    \   call SuperTabSetDefaultCompletionType("<c-x><c-o>")
+autocmd FileType go call SuperTabSetDefaultCompletionType("<c-x><c-o>")
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                      clang_complete options
@@ -127,3 +125,9 @@ let g:clang_complete_patterns = 1
 
 "let g:clang_user_options = '-std=c++11'
 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                      vim-go options
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:go_info_mode = 'gocode'
+let g:go_def_mode = 'guru'
+let g:go_autodetect_gopath = 1
