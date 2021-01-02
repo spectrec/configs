@@ -4,6 +4,7 @@ call plug#begin('~/.vim/plugged')
 Plug 'ervandew/supertab'
 Plug 'fatih/vim-go', { 'tag': 'v1.19' }
 Plug 'Rip-Rip/clang_complete'
+Plug 'vimwiki/vimwiki'
 call plug#end()
 
 set listchars=tab:>-,trail:~,extends:>,precedes:<
@@ -56,7 +57,6 @@ set hlsearch
 set history=50	" keep 50 lines of command line history
 set ruler		" show the cursor position all the time
 set showcmd		" display incomplete commands
-set textwidth=78 
 
 set autoindent 	" auto spacing
 set smartindent " smart spacing
@@ -118,7 +118,7 @@ let g:clang_user_options='-std=c++0x'
 let g:clang_close_preview = 1
 
 let g:clang_use_library = 1
-let g:clang_library_path = '/usr/lib64/llvm'
+let g:clang_library_path = '/usr/lib/llvm-10/lib/'
 
 let g:clang_complete_macros = 1
 let g:clang_complete_patterns = 1
