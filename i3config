@@ -29,11 +29,12 @@ exec --no-startup-id /usr/bin/kbdd
 exec --no-startup-id /usr/bin/xscreensaver -no-splash
 
 # remap keys make them more convinient (xmodmap should be execuded after setxkbmap, otherwise it will not work)
-exec_always --no-startup-id /usr/bin/setxkbmap -layout 'us,ru(winkeys)' -option 'grp:alt_shift_toggle' -option 'caps:ctrl_modifier' && /usr/bin/xmodmap -e 'keycode 104 = Return'
+exec_always --no-startup-id /usr/bin/setxkbmap -layout 'us,ru(winkeys)' -option 'grp:alt_shift_toggle' -option 'caps:ctrl_modifier'
 
 # remap touchpad (two finger tap is a middle click)
 exec_always --no-startup-id /usr/bin/synclient TapButton1=1 TapButton2=2 TapButton3=3
-bindsym $mod+m exec --no-startup-id /usr/bin/synclient TapButton1=1 TapButton2=2 TapButton3=3
+exec_always --no-startup-id /usr/bin/xinput set-prop $(xinput --list | grep Touchpad | grep -oP '(?<=id=)\d+') 'Synaptics Tap Action' 2, 3, 0, 0, 1, 2, 3
+exec_always --no-startup-id /usr/bin/xinput set-prop $(xinput --list | grep 'Synaptics TouchPad' | grep -oP '(?<=id=)\d+') 'Synaptics Tap Action' 2, 3, 0, 0, 1, 2, 3
 
 # Use pactl to adjust volume in PulseAudio.
 set $refresh_i3status killall -SIGUSR1 i3status
@@ -68,12 +69,6 @@ bindsym $mod+h focus left
 bindsym $mod+j focus down
 bindsym $mod+k focus up
 bindsym $mod+l focus right
-
-# alternatively, you can use the cursor keys:
-bindsym $mod+Left focus left
-bindsym $mod+Down focus down
-bindsym $mod+Up focus up
-bindsym $mod+Right focus right
 
 # move focused window
 bindsym $mod+Shift+h move left
@@ -155,6 +150,16 @@ bindsym $mod+Shift+6 move container to workspace number $ws6
 bindsym $mod+Shift+7 move container to workspace number $ws7
 bindsym $mod+Shift+8 move container to workspace number $ws8
 bindsym $mod+Shift+9 move container to workspace number $ws9
+
+# enable/disable the second monitor
+bindsym $mod+F2 exec xrandr --output HDMI-1 --auto --above eDP-1
+bindsym $mod+F9 exec xrandr --output HDMI-1 --off
+
+# move container to anather output (monitor)
+bindsym $mod+Left move workspace to output left
+bindsym $mod+Right move workspace to output right
+bindsym $mod+Up move workspace to output up
+bindsym $mod+Down move workspace to output down
 
 # reload the configuration file
 # bindsym $mod+Shift+c reload
