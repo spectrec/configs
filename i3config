@@ -9,6 +9,8 @@
 #
 # Please see https://i3wm.org/docs/userguide.html for a complete reference!
 
+# mod1: alt
+# mod4: win
 set $mod Mod4
 
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
@@ -35,6 +37,9 @@ exec_always --no-startup-id /usr/bin/setxkbmap -layout 'us,ru(winkeys)' -option 
 exec_always --no-startup-id /usr/bin/synclient TapButton1=1 TapButton2=2 TapButton3=3
 exec_always --no-startup-id /usr/bin/xinput set-prop $(xinput --list | grep Touchpad | grep -oP '(?<=id=)\d+') 'Synaptics Tap Action' 2, 3, 0, 0, 1, 2, 3
 exec_always --no-startup-id /usr/bin/xinput set-prop $(xinput --list | grep 'Synaptics TouchPad' | grep -oP '(?<=id=)\d+') 'Synaptics Tap Action' 2, 3, 0, 0, 1, 2, 3
+
+# hack for old `haier' notebook
+bindsym $mod+m exec --no-startup-id /usr/bin/synclient TapButton1=1 TapButton2=2 TapButton3=3
 
 # Use pactl to adjust volume in PulseAudio.
 set $refresh_i3status killall -SIGUSR1 i3status
@@ -167,6 +172,8 @@ bindsym $mod+Down move workspace to output down
 bindsym $mod+Shift+r restart
 # exit i3 (logs you out of your X session)
 bindsym $mod+Shift+q exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
+
+bindsym Mod1+t bar mode toggle
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
