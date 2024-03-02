@@ -2,7 +2,7 @@ set nocompatible
 
 call plug#begin('~/.vim/plugged')
 Plug 'ervandew/supertab'
-Plug 'fatih/vim-go', { 'tag': 'v1.19' }
+Plug 'fatih/vim-go'
 Plug 'Rip-Rip/clang_complete'
 Plug 'vimwiki/vimwiki'
 call plug#end()
@@ -45,7 +45,7 @@ xnoremap p pgvy
 
 colorscheme ron
 if &diff
-	colorscheme ron
+	colorscheme industry
 endif
 
 " all for search
@@ -128,6 +128,13 @@ let g:clang_complete_patterns = 1
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                      vim-go options
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:go_info_mode = 'gocode'
-let g:go_def_mode = 'guru'
+let g:go_info_mode = 'gopls'
+let g:go_def_mode = 'gopls'
 let g:go_autodetect_gopath = 1
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                      vimwiki options
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:vimwiki_list = [{'path': '~/self/wikis/', 'syntax': 'markdown', 'ext': '.md', 'index': 'README'}, {'path': '~/work/', 'syntax': 'markdown', 'ext': '.md', 'index': 'index'}]
+let g:vimwiki_global_ext = 0
+let g:vimwiki_auto_chdir = 1
